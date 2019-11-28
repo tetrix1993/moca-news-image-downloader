@@ -1,7 +1,8 @@
 # Moca News Image Downloader
 
 ## Introduction
-Moca News Image Downloader is a simple command line program to download enlarged images from the [Moca News website](https://moca-news.net/). These images are right-clicked disabled on the website and accessing the direct link to the image will show an "X" image instead (see below). This program is used to download the intended images from the website. This program is written in Python 3.
+Moca News Image Downloader is a simple command line program to download enlarged images from the [Moca News website](https://moca-news.net/). These images are right click disabled and accessing the image's direct link will show an "X" image instead (see below). The program downloads the intended images based on the article ID. This program is written in Python 3.
+
 ![ban.jpg](/images/ban.jpg)
 
 ## Setting Up
@@ -23,4 +24,5 @@ pip install requests
 
 ## Additional Notes
 1. If some of the images downloaded are the images with "X" (see below), delete these images and re-run the program with the same command to download the images again.
+
 ![ban.jpg](/images/ban.jpg)
