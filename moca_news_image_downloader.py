@@ -36,29 +36,30 @@ def run(article_id):
     headers = {}
     headers['User-Agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
     try:
-        response = get_response(page_url, headers)
-        article_id_split = article_id.split("/")
+        response = self.get_response(page_url, headers)
+        article_id_split = self.article_id.split("/")
         if len(article_id_split) < 2:
             return
         art_id = article_id_split[1]
         data = {}
         data['art_id'] = art_id
-        save_folder = BASE_FOLDER + "/" + art_id
-        if not is_dir_exists(save_folder):
-            create_directory(save_folder)
         split1 = response.split('<img src="../image/!')
-        num_of_images = len(split1) - 1
-        for i in range(num_of_images):
-            pic_num = str(i + 1).zfill(2)
-            if is_file_exists(save_folder + "/" + pic_num + ".jpg"):
+        for i in range(1, len(split1), 1):
+            split2 = split1[i].split('.jpg')[0]
+            try:
+                img_num = int(split2)
+            except Exception as e:
                 continue
-            cookie = post_response(COOKIE_URL, headers, data)
-            img_id = str(i + 1).zfill(3)
-            image_page_url = PAGE_PREFIX + article_id + "/image" + img_id + ".html"
-            image_url = PAGE_PREFIX + article_id + "/image/" + img_id + check_str(art_id, img_id) + ".jpg"
+            pic_num = str(i).zfill(2)
+            if self.is_file_exists(self.base_folder + "/" + self.episode + "_" + pic_num + ".jpg"):
+                continue
+            cookie = self.post_response(self.COOKIE_URL, headers, data)
+            img_id = str(img_num).zfill(3)
+            image_page_url = self.PAGE_PREFIX + self.article_id + "/image" + img_id + ".html"
+            image_url = self.PAGE_PREFIX + self.article_id + "/image/" + img_id + self.check_str(art_id, img_id) + ".jpg"
             headers['Cookie'] = 'imgkey' + img_id + '=' + str(cookie)
-            filepathWithoutExtension = save_folder + "/" + pic_num
-            download_image(image_url, filepathWithoutExtension, headers)
+            filepathWithoutExtension = self.base_folder + "/" + self.episode + "_" + pic_num
+            self.download_image(image_url, filepathWithoutExtension, headers)
     except Exception as e:
         print(e)
             
